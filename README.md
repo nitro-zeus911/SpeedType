@@ -16,4 +16,4 @@ JavaScript
 
 ## Live Demo
 
-(link)
+[(link)](https://nitro-zeus911.github.io/SpeedType/)
