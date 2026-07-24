@@ -1,5 +1,5 @@
 // ==========================================================================
-// 60-Level Dataset: Clean passages without "Level X:" prefixes
+// 1. Passage Dataset (Standard Modes + Programming Mode)
 // ==========================================================================
 const PASSAGES = {
   easy: [
@@ -7,71 +7,30 @@ const PASSAGES = {
     "A quick brown fox jumps.",
     "Sunlight fills the warm room.",
     "Open the door and step outside.",
-    "Birds sing sweet songs in spring.",
-    "Fresh rain drops fell on leaves.",
-    "Read a good book every evening.",
-    "Fresh apples grow on tall trees.",
-    "Keep your dreams close to heart.",
-    "Smile at the world each morning.",
-    "Gentle waves touch the ocean shore.",
-    "Clear water flows in the river.",
-    "Bright stars light up the dark sky.",
-    "Coffee smells great in the morning.",
-    "Walk along the scenic mountain path.",
-    "Practice brings steady improvement daily.",
-    "Learning new skills is always rewarding.",
-    "Music brings happiness to every soul.",
-    "Believe in yourself and stay focus.",
-    "Congratulations! You completed Easy Mode!"
+    "Birds sing sweet songs in spring."
   ],
   medium: [
     "Programming isn't about what you know; it's about what you can figure out.",
     "JavaScript is the language of the web, enabling interactive web experiences.",
     "Success is not final, failure is not fatal: it is the courage to continue.",
-    "Clean code always looks like it was written by someone who cares.",
-    "Consistency is key when mastering touch typing and speed.",
-    "Responsive web design adapts layouts dynamically across all devices.",
-    "Modern web browsers process scripts using high-performance engines.",
-    "Front-end developers use HTML, CSS, and JavaScript as core building blocks.",
-    "Focus on accuracy first, and typing speed will follow naturally over time.",
-    "Functions isolate logic, making software easier to test and maintain.",
-    "Cascading Style Sheets give web applications their unique visual style.",
-    "Event listeners allow web pages to respond dynamically to user input.",
-    "LocalStorage offers persistent key-value storage inside user browsers.",
-    "Version control systems like Git allow developers to collaborate efficiently.",
-    "Asynchronous programming allows long tasks without freezing the UI.",
-    "Well-structured DOM manipulation forms the core of modern web apps.",
-    "Array operations like map, filter, and reduce yield clean code.",
-    "Good keyboard ergonomics prevent physical strain during long sessions.",
-    "Debugging requires systematic analysis of error messages and call stacks.",
-    "Excellent work! You have conquered all 20 Medium Levels!"
+    "Clean code always looks like it was written by someone who cares."
   ],
   hard: [
     "Synchronous execution blocks the thread, whereas asynchronous operations allow non-blocking primitives.",
-    "Object-oriented paradigms construct entities with encapsulated state and immutable properties.",
-    "Optimizing the critical rendering path reduces layout shifts and improves perceived page load times.",
-    "Lexical scoping determines variable access based on physical positioning within source code structures.",
     "Cryptographic hash functions transform arbitrary data streams into fixed-length digest outputs securely.",
-    "Polyfills provide modern browser features to legacy runtimes lacking native standard implementations.",
-    "WebSockets establish full-duplex persistent TCP socket channels for low-latency bidirectional communication.",
-    "Micro-frontend architecture divides monolithic web interfaces into independently deployable units.",
-    "Just-In-Time compilation optimizes bytecode execution paths dynamically during runtime operation.",
-    "Recursion solves complex computational subproblems through repeated self-referential call stacks.",
-    "Document Object Model trees represent XML or HTML structures as node-based object hierarchies.",
-    "Memory leaks occur when unreachable references persist without garbage collection reclaiming allocations.",
-    "Service Workers intercept network requests to enable offline caching and background synchronization.",
-    "Cross-Origin Resource Sharing protocols enforce browser-level security boundaries across domains.",
-    "Content Security Policies mitigate injection vectors including cross-site scripting vulnerabilities.",
-    "CSS Grid and Flexbox provide powerful two-dimensional and one-dimensional layout systems.",
-    "Pure functions always return identical results when passed identical arguments without side effects.",
-    "Abstract Syntax Trees represent tokenized code structures visually for compiler optimization steps.",
-    "Time complexity analysis using Big-O notation measures algorithm scalability under scaling input sizes.",
-    "Master Class Complete! You have mastered all 60 typing speed challenges!"
+    "WebSockets establish full-duplex persistent TCP socket channels for low-latency bidirectional communication."
+  ],
+  // NEW FEATURE: Programming Mode dataset
+  programming: [
+    "public class Main { public static void main(String[] args) { System.out.println(\"Hello World\"); } }",
+    "int factorial(int n) { return (n <= 1) ? 1 : n * factorial(n - 1); }",
+    "<div class=\"container\"><h1 class=\"title\">Welcome</h1><p>Start typing</p></div>",
+    "const fetchData = async (url) => { const res = await fetch(url); return res.json(); };"
   ]
 };
 
 // ==========================================================================
-// State Management
+// 2. State Management
 // ==========================================================================
 let timer = 60;
 let timeRemaining = timer;
@@ -79,13 +38,14 @@ let timerInterval = null;
 let isTesting = false;
 let isLoading = false;
 let totalErrors = 0;
+let totalTypedChars = 0;
 let currentPassage = "";
 
 let currentDifficulty = "medium";
-let currentSubLevel = 0; // 0 to 19
+let currentSubLevel = 0;
 
 // ==========================================================================
-// DOM Elements
+// 3. DOM Elements Initialization
 // ==========================================================================
 const welcomeScreen = document.getElementById("welcome-screen");
 const enterAppBtn = document.getElementById("enter-app-btn");
@@ -93,10 +53,12 @@ const mainApp = document.getElementById("main-app");
 
 const quoteDisplayEl = document.getElementById("quote-display");
 const quoteInputEl = document.getElementById("quote-input");
+const progressBarEl = document.getElementById("progress-bar");
 const timerEl = document.getElementById("timer");
 const wpmEl = document.getElementById("wpm");
 const accuracyEl = document.getElementById("accuracy");
 const mistakesEl = document.getElementById("mistakes");
+
 const startBtn = document.getElementById("start-btn");
 const resetBtn = document.getElementById("reset-btn");
 const difficultySelect = document.getElementById("difficulty");
@@ -104,20 +66,29 @@ const subLevelSelect = document.getElementById("sub-level");
 const prevLevelBtn = document.getElementById("prev-level-btn");
 const nextLevelBtn = document.getElementById("next-level-btn");
 const currentLevelBadge = document.getElementById("current-level-badge");
+
 const themeToggleBtn = document.getElementById("theme-toggle");
 const themeIcon = document.getElementById("theme-icon");
+
+// Results modal elements
 const resultsCard = document.getElementById("results-card");
 const finalWpmEl = document.getElementById("final-wpm");
 const finalAccuracyEl = document.getElementById("final-accuracy");
-const finalMistakesEl = document.getElementById("final-mistakes");
+const finalTotalCharsEl = document.getElementById("final-total-chars");
+const finalCorrectCharsEl = document.getElementById("final-correct-chars");
+const finalWrongCharsEl = document.getElementById("final-wrong-chars");
+const finalTimeTakenEl = document.getElementById("final-time-taken");
+const tryAgainBtn = document.getElementById("try-again-btn");
 const nextLevelModalBtn = document.getElementById("next-level-modal-btn");
+
+// History elements
 const historyListEl = document.getElementById("history-list");
 const clearHistoryBtn = document.getElementById("clear-history-btn");
 const loadingOverlay = document.getElementById("loading-overlay");
 const loadingSubtext = document.getElementById("loading-subtext");
 
 // ==========================================================================
-// Initialization & Landing Screen Transition
+// 4. Initial Setup & Event Listeners
 // ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
   loadTheme();
@@ -125,18 +96,17 @@ document.addEventListener("DOMContentLoaded", () => {
   loadHistory();
   loadCurrentLevelPassage();
 
-  // Landing page start button -> Triggers login loading sequence
   enterAppBtn.addEventListener("click", launchAppWithAnimation);
-
-  // Event Listeners
   startBtn.addEventListener("click", startTest);
   resetBtn.addEventListener("click", resetTest);
+  tryAgainBtn.addEventListener("click", resetTest);
   quoteInputEl.addEventListener("input", handleTyping);
-  
+
+  // Dropdown listeners
   difficultySelect.addEventListener("change", () => {
     currentDifficulty = difficultySelect.value;
     currentSubLevel = 0;
-    subLevelSelect.value = 0;
+    populateSubLevelDropdown();
     resetTest();
   });
 
@@ -156,21 +126,23 @@ document.addEventListener("DOMContentLoaded", () => {
   clearHistoryBtn.addEventListener("click", clearHistory);
 });
 
-// Launch app: Hides welcome screen -> Plays Loading Animation -> Reveals Typing Page
+// Smooth intro animation transition
 function launchAppWithAnimation() {
   welcomeScreen.classList.add("hidden");
   loadingOverlay.classList.remove("hidden");
-  loadingSubtext.innerText = "Authenticating session & loading dataset...";
+  loadingSubtext.innerText = "Loading modules & visualizer...";
 
   setTimeout(() => {
     loadingOverlay.classList.add("hidden");
     mainApp.classList.remove("hidden");
-  }, 1800);
+  }, 1200);
 }
 
 function populateSubLevelDropdown() {
   subLevelSelect.innerHTML = "";
-  for (let i = 0; i < 20; i++) {
+  const totalLevels = PASSAGES[currentDifficulty].length;
+  
+  for (let i = 0; i < totalLevels; i++) {
     const opt = document.createElement("option");
     opt.value = i;
     opt.innerText = `Level ${i + 1}`;
@@ -180,8 +152,9 @@ function populateSubLevelDropdown() {
 }
 
 function changeSubLevel(delta) {
+  const maxLevels = PASSAGES[currentDifficulty].length;
   let newLevel = currentSubLevel + delta;
-  if (newLevel >= 0 && newLevel < 20) {
+  if (newLevel >= 0 && newLevel < maxLevels) {
     currentSubLevel = newLevel;
     subLevelSelect.value = currentSubLevel;
     resetTest();
@@ -190,10 +163,12 @@ function changeSubLevel(delta) {
 
 function loadCurrentLevelPassage() {
   currentPassage = PASSAGES[currentDifficulty][currentSubLevel];
+  const maxLevels = PASSAGES[currentDifficulty].length;
 
   const difficultyTitle = currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1);
-  currentLevelBadge.innerText = `${difficultyTitle} • Level ${currentSubLevel + 1} / 20`;
+  currentLevelBadge.innerText = `${difficultyTitle} • Level ${currentSubLevel + 1} / ${maxLevels}`;
 
+  // Break passage into individual char spans for live tracking
   quoteDisplayEl.innerHTML = "";
   currentPassage.split("").forEach((char, index) => {
     const charSpan = document.createElement("span");
@@ -207,7 +182,7 @@ function loadCurrentLevelPassage() {
 }
 
 // ==========================================================================
-// Typing Test Functions
+// 5. Live Typing Analysis & Visualizer Logic
 // ==========================================================================
 function startTest() {
   if (isTesting || isLoading) return;
@@ -232,14 +207,16 @@ function startTest() {
   }, 1000);
 }
 
-function handleTyping() {
+function handleTyping(e) {
   if (!isTesting) return;
 
   const arrayQuote = quoteDisplayEl.querySelectorAll(".char");
   const arrayValue = quoteInputEl.value.split("");
 
   let errorsThisFrame = 0;
+  totalTypedChars = arrayValue.length;
 
+  // Real-time character highlighting
   arrayQuote.forEach((characterSpan, index) => {
     const typedChar = arrayValue[index];
 
@@ -257,17 +234,44 @@ function handleTyping() {
     }
   });
 
+  // Set current cursor indicator
   if (arrayValue.length < arrayQuote.length) {
     arrayQuote[arrayValue.length].classList.add("current");
   }
 
+  // Update progress bar percentage
+  const progressPercent = Math.min((arrayValue.length / currentPassage.length) * 100, 100);
+  progressBarEl.style.width = `${progressPercent}%`;
+
   totalErrors = errorsThisFrame;
   mistakesEl.innerText = totalErrors;
 
+  // Trigger Keyboard Visualizer Feedback
+  if (e.inputType !== "deleteContentBackward" && arrayValue.length > 0) {
+    const lastTypedChar = arrayValue[arrayValue.length - 1];
+    const targetChar = currentPassage[arrayValue.length - 1];
+    highlightVirtualKey(lastTypedChar, lastTypedChar === targetChar);
+  }
+
   calculateLiveStats();
 
+  // End test early if completed full snippet
   if (arrayValue.length >= currentPassage.length) {
     endTest();
+  }
+}
+
+// Keyboard Visualizer: Highlights pressed key green/red
+function highlightVirtualKey(char, isCorrect) {
+  const keyClass = isCorrect ? "key-correct" : "key-incorrect";
+  const searchChar = char.toLowerCase();
+  
+  const keyEl = document.querySelector(`.key[data-key="${searchChar}"]`);
+  if (keyEl) {
+    keyEl.classList.add(keyClass);
+    setTimeout(() => {
+      keyEl.classList.remove("key-correct", "key-incorrect");
+    }, 200);
   }
 }
 
@@ -290,6 +294,9 @@ function calculateLiveStats() {
   accuracyEl.innerText = `${accuracy < 0 ? 0 : accuracy}%`;
 }
 
+// ==========================================================================
+// 6. Results & Score History Handling
+// ==========================================================================
 function endTest() {
   clearInterval(timerInterval);
   isTesting = false;
@@ -297,16 +304,21 @@ function endTest() {
   startBtn.disabled = false;
   startBtn.innerText = "Start Test";
 
+  const timeTaken = timer - timeRemaining;
   const finalWpm = wpmEl.innerText;
   const finalAccuracy = accuracyEl.innerText;
-  const finalMistakes = mistakesEl.innerText;
+  const correctChars = Math.max(0, totalTypedChars - totalErrors);
 
+  // Populate Result Card Dashboard
   finalWpmEl.innerText = finalWpm;
   finalAccuracyEl.innerText = finalAccuracy;
-  finalMistakesEl.innerText = finalMistakes;
-  resultsCard.classList.remove("hidden");
+  finalTotalCharsEl.innerText = totalTypedChars;
+  finalCorrectCharsEl.innerText = correctChars;
+  finalWrongCharsEl.innerText = totalErrors;
+  finalTimeTakenEl.innerText = `${timeTaken}s`;
 
-  saveScore(finalWpm, finalAccuracy);
+  resultsCard.classList.remove("hidden");
+  saveScore(finalWpm, finalAccuracy, totalErrors);
 }
 
 function resetTest() {
@@ -315,12 +327,12 @@ function resetTest() {
   isLoading = false;
   quoteInputEl.disabled = true;
   quoteInputEl.value = "";
+  progressBarEl.style.width = "0%";
   
   startBtn.disabled = false;
   startBtn.innerText = "Start Test";
   
   resultsCard.classList.add("hidden");
-  
   loadCurrentLevelPassage();
 }
 
@@ -331,32 +343,33 @@ function resetStats() {
   accuracyEl.innerText = "100%";
   mistakesEl.innerText = "0";
   totalErrors = 0;
+  totalTypedChars = 0;
 }
 
-// ==========================================================================
-// LocalStorage History
-// ==========================================================================
-function saveScore(wpm, accuracy) {
-  const history = JSON.parse(localStorage.getItem("typingHistory60")) || [];
-  const difficultyTitle = currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1);
+// LocalStorage Persistence
+function saveScore(wpm, accuracy, mistakes) {
+  const history = JSON.parse(localStorage.getItem("typingHistoryAdvanced")) || [];
+  
+  const now = new Date();
+  const formattedDate = `${now.getDate()} ${now.toLocaleString('default', { month: 'short' })}`;
   
   const newEntry = {
-    date: new Date().toLocaleDateString(),
-    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    date: formattedDate,
+    time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     wpm: wpm,
     accuracy: accuracy,
-    levelInfo: `${difficultyTitle} Lvl ${currentSubLevel + 1}`
+    mistakes: mistakes
   };
 
   history.unshift(newEntry);
   if (history.length > 10) history.pop();
 
-  localStorage.setItem("typingHistory60", JSON.stringify(history));
+  localStorage.setItem("typingHistoryAdvanced", JSON.stringify(history));
   renderHistory(history);
 }
 
 function loadHistory() {
-  const history = JSON.parse(localStorage.getItem("typingHistory60")) || [];
+  const history = JSON.parse(localStorage.getItem("typingHistoryAdvanced")) || [];
   renderHistory(history);
 }
 
@@ -364,7 +377,7 @@ function renderHistory(history) {
   historyListEl.innerHTML = "";
 
   if (history.length === 0) {
-    historyListEl.innerHTML = `<li class="history-item">No past attempts recorded.</li>`;
+    historyListEl.innerHTML = `<li class="history-item">No past attempts recorded yet.</li>`;
     return;
   }
 
@@ -372,20 +385,20 @@ function renderHistory(history) {
     const li = document.createElement("li");
     li.classList.add("history-item");
     li.innerHTML = `
-      <span><strong>${item.wpm} WPM</strong> (${item.accuracy})</span>
-      <span style="color: var(--text-secondary);">${item.levelInfo} • ${item.date}</span>
+      <span><strong>${item.date}</strong></span>
+      <span><strong>${item.wpm} WPM</strong> | ${item.accuracy} Accuracy</span>
     `;
     historyListEl.appendChild(li);
   });
 }
 
 function clearHistory() {
-  localStorage.removeItem("typingHistory60");
+  localStorage.removeItem("typingHistoryAdvanced");
   loadHistory();
 }
 
 // ==========================================================================
-// Theme Toggle
+// 7. Theme Control
 // ==========================================================================
 function toggleTheme() {
   const currentTheme = document.documentElement.getAttribute("data-theme");
