@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Typing Speed Tester - 60 Levels</title>
+  <title>Advanced Typing Speed Tester</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,58 +11,63 @@
 </head>
 <body>
 
-  <!-- ========================================= -->
-  <!-- 1. LANDING / LOGIN WELCOME SCREEN         -->
-  <!-- ========================================= -->
+  <!-- Landing / Welcome Overlay -->
   <div id="welcome-screen" class="welcome-screen">
     <div class="welcome-card">
-      <div class="welcome-badge">Level 1 - 60 Challenge</div>
+      <div class="welcome-badge">Pro Typing Suite</div>
       <h1>Master Your Typing Speed</h1>
-      <p>Test your typing performance across 60 curated levels ranging from Easy to Hard.</p>
+      <p>Test your typing performance across 60 levels, including real coding passages in Programming Mode!</p>
       
       <div class="welcome-features">
-        <div class="feature-item">⚡ Live WPM & Accuracy Track</div>
-        <div class="feature-item">🎯 60 Dynamic Passages</div>
-        <div class="feature-item">🌙 Dark Mode & History Stats</div>
+        <div class="feature-item">⚡ Real-time Character Highlighting</div>
+        <div class="feature-item">💻 Programming Mode (Java, C, HTML)</div>
+        <div class="feature-item">⌨️ Interactive Virtual Keyboard Visualizer</div>
+        <div class="feature-item">📊 Detailed Results & Score History</div>
       </div>
 
       <button id="enter-app-btn" class="btn btn-primary btn-large">Start Session ➔</button>
     </div>
   </div>
 
-  <!-- ========================================= -->
-  <!-- 2. MAIN TYPING TESTER APPLICATION CARD   -->
-  <!-- ========================================= -->
+  <!-- Loading Animation Overlay -->
+  <div id="loading-overlay" class="loading-overlay hidden">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <p class="loading-text">Preparing Environment...</p>
+      <p id="loading-subtext" class="loading-subtext">Initializing dataset & visualizer...</p>
+    </div>
+  </div>
+
+  <!-- Main Application Container -->
   <div id="main-app" class="container hidden">
     
-    <!-- Header -->
+    <!-- Top Header -->
     <header class="header">
       <div>
         <h1>Typing Speed Tester</h1>
-        <p class="subtitle">Master 60 levels of typing speed challenges</p>
+        <p class="subtitle">Boost your speed, accuracy, and coding muscle memory</p>
       </div>
       <button id="theme-toggle" class="btn-icon" aria-label="Toggle Theme">
         <span id="theme-icon">🌙</span>
       </button>
     </header>
 
-    <!-- Navigation & Controls Card -->
+    <!-- Controls & Live Stats Dashboard -->
     <div class="controls-card">
       <div class="level-navigation">
         <div class="control-group">
-          <label for="difficulty">Difficulty:</label>
+          <label for="difficulty">Category:</label>
           <select id="difficulty">
             <option value="easy">Easy</option>
             <option value="medium" selected>Medium</option>
             <option value="hard">Hard</option>
+            <option value="programming">Programming Mode</option>
           </select>
         </div>
 
         <div class="control-group">
           <label for="sub-level">Level:</label>
-          <select id="sub-level">
-            <!-- Populated dynamically via JS -->
-          </select>
+          <select id="sub-level"></select>
         </div>
 
         <div class="level-buttons">
@@ -71,7 +76,7 @@
         </div>
       </div>
 
-      <!-- Live Stats Display -->
+      <!-- Live Performance Dashboard -->
       <div class="stats-grid">
         <div class="stat-box">
           <span class="stat-label">Time Left</span>
@@ -92,19 +97,24 @@
       </div>
     </div>
 
-    <!-- Test Dashboard -->
+    <!-- Main Test Area -->
     <main class="test-card">
-      <div class="level-indicator-badge">
-        <span id="current-level-badge">Medium • Level 1 / 20</span>
+      <div class="test-header-bar">
+        <span id="current-level-badge" class="level-indicator-badge">Medium • Level 1 / 20</span>
+        <!-- Progress Bar -->
+        <div class="progress-container">
+          <div id="progress-bar" class="progress-bar"></div>
+        </div>
       </div>
 
-      <div id="quote-display" class="quote-display">Loading level passage...</div>
+      <div id="quote-display" class="quote-display">Loading passage...</div>
 
       <textarea 
         id="quote-input" 
         class="quote-input" 
         placeholder="Click 'Start Test' or start typing here..." 
         disabled
+        spellcheck="false"
       ></textarea>
 
       <div class="button-group">
@@ -113,37 +123,69 @@
       </div>
     </main>
 
-    <!-- Final Results Section -->
-    <section id="results-card" class="results-card hidden">
-      <h2>🎉 Level Completed!</h2>
-      <div class="results-summary">
-        <p>Speed: <strong id="final-wpm">0</strong> WPM</p>
-        <p>Accuracy: <strong id="final-accuracy">0%</strong></p>
-        <p>Mistakes: <strong id="final-mistakes">0</strong></p>
+    <!-- Virtual Keyboard Visualizer -->
+    <section class="keyboard-card">
+      <h3>Keyboard Visualizer</h3>
+      <div id="keyboard" class="keyboard">
+        <div class="key-row">
+          <div class="key" data-key="q">Q</div><div class="key" data-key="w">W</div><div class="key" data-key="e">E</div><div class="key" data-key="r">R</div><div class="key" data-key="t">T</div><div class="key" data-key="y">Y</div><div class="key" data-key="u">U</div><div class="key" data-key="i">I</div><div class="key" data-key="o">O</div><div class="key" data-key="p">P</div>
+        </div>
+        <div class="key-row">
+          <div class="key" data-key="a">A</div><div class="key" data-key="s">S</div><div class="key" data-key="d">D</div><div class="key" data-key="f">F</div><div class="key" data-key="g">G</div><div class="key" data-key="h">H</div><div class="key" data-key="j">J</div><div class="key" data-key="k">K</div><div class="key" data-key="l">L</div>
+        </div>
+        <div class="key-row">
+          <div class="key" data-key="z">Z</div><div class="key" data-key="x">X</div><div class="key" data-key="c">C</div><div class="key" data-key="v">V</div><div class="key" data-key="b">B</div><div class="key" data-key="n">N</div><div class="key" data-key="m">M</div>
+        </div>
+        <div class="key-row">
+          <div class="key key-space" data-key=" ">Space</div>
+        </div>
       </div>
-      <button id="next-level-modal-btn" class="btn btn-primary margin-top">Advance to Next Level ➔</button>
     </section>
 
-    <!-- History Section -->
+    <!-- Detailed Results Dashboard -->
+    <section id="results-card" class="results-card hidden">
+      <h2>🎉 Test Completed!</h2>
+      <div class="results-grid">
+        <div class="result-box">
+          <span class="result-label">Final WPM</span>
+          <span id="final-wpm" class="result-val">0</span>
+        </div>
+        <div class="result-box">
+          <span class="result-label">Accuracy</span>
+          <span id="final-accuracy" class="result-val">0%</span>
+        </div>
+        <div class="result-box">
+          <span class="result-label">Total Characters</span>
+          <span id="final-total-chars" class="result-val">0</span>
+        </div>
+        <div class="result-box">
+          <span class="result-label">Correct Characters</span>
+          <span id="final-correct-chars" class="result-val">0</span>
+        </div>
+        <div class="result-box">
+          <span class="result-label">Wrong Characters</span>
+          <span id="final-wrong-chars" class="result-val">0</span>
+        </div>
+        <div class="result-box">
+          <span class="result-label">Time Taken</span>
+          <span id="final-time-taken" class="result-val">0s</span>
+        </div>
+      </div>
+      <div class="modal-buttons">
+        <button id="try-again-btn" class="btn btn-secondary margin-top">Try Again</button>
+        <button id="next-level-modal-btn" class="btn btn-primary margin-top">Next Passage ➔</button>
+      </div>
+    </section>
+
+    <!-- Score History Section -->
     <section class="history-card">
       <div class="history-header">
-        <h3>Score History</h3>
+        <h3>Previous Attempts</h3>
         <button id="clear-history-btn" class="btn-text">Clear History</button>
       </div>
       <ul id="history-list" class="history-list"></ul>
     </section>
 
-  </div>
-
-  <!-- ========================================= -->
-  <!-- 3. TRANSITION / LOADING SCREEN OVERLAY    -->
-  <!-- ========================================= -->
-  <div id="loading-overlay" class="loading-overlay hidden">
-    <div class="loading-content">
-      <div class="spinner"></div>
-      <p class="loading-text">Logging In...</p>
-      <p id="loading-subtext" class="loading-subtext">Initializing your typing session...</p>
-    </div>
   </div>
 
   <script src="script.js"></script>
