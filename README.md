@@ -14,10 +14,6 @@ HTML
 CSS
 JavaScript
 
-## Screenshot
-
-(image)
-
 ## Live Demo
 
 (link)
