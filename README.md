@@ -1,14 +1,23 @@
 # Typing Speed Tester
 
-A simple web application that measures typing speed and accuracy.
+A browser-based typing speed application built using HTML, CSS and JavaScript.
 
 ## Features
-- WPM calculation
-- Accuracy tracking
-- Timer
-- Score history
+✔ WPM calculation
+✔ Accuracy tracking
+✔ Timer
+✔ Difficulty modes
+✔ Score history
 
-## Technologies
+## Tech Stack
 HTML
 CSS
 JavaScript
+
+## Screenshot
+
+(image)
+
+## Live Demo
+
+(link)
