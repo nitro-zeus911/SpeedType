@@ -1,93 +1,50 @@
 // ==========================================================================
-// 1. DATASETS (20 LEVELS PER CATEGORY)
+// 1. DATASETS & ACHIEVEMENTS
 // ==========================================================================
 const PASSAGES = {
   easy: [
-    "Cat sat on mat.",
-    "Run in the sun.",
-    "A fast red car.",
-    "Dogs like to play.",
-    "The blue sky is clear.",
-    "Birds fly high in spring.",
-    "Fresh apples taste very good.",
-    "Always try your best today.",
-    "Water flows down the river.",
-    "A soft breeze blows gently.",
-    "Reading books helps you learn.",
-    "Small steps lead to progress.",
-    "Kindness brings joy to everyone.",
-    "Bright stars shine in the night.",
-    "Practice every day to get better.",
-    "Music makes people feel happy.",
-    "Walking outside helps calm your mind.",
-    "Hard work leads to great results.",
-    "Positive thinking changes your perspective on life.",
-    "Consistency and quiet focus pave the path toward true mastery."
+    "Cat sat on mat.", "Run in the sun.", "A fast red car.", "Dogs like to play.",
+    "The blue sky is clear.", "Birds fly high in spring.", "Fresh apples taste very good.",
+    "Always try your best today.", "Water flows down the river.", "A soft breeze blows gently.",
+    "Reading books helps you learn.", "Small steps lead to progress.", "Kindness brings joy to everyone.",
+    "Bright stars shine in the night.", "Practice every day to get better.", "Music makes people feel happy.",
+    "Walking outside helps calm your mind.", "Hard work leads to great results.",
+    "Positive thinking changes your perspective on life.", "Consistency and quiet focus pave the path toward true mastery."
   ],
   medium: [
-    "Simple habits shape daily routines over time.",
-    "Typing speed increases with regular accurate practice.",
-    "JavaScript powers interactive features across modern web apps.",
-    "Clean code remains easy to read, test, and maintain.",
-    "Understanding basic data structures improves software problem solving.",
-    "Web performance optimization ensures fast page load speeds.",
-    "Version control systems help engineering teams collaborate efficiently.",
-    "Responsive design adapts user interfaces smoothly to mobile screens.",
-    "Database indexing dramatically speeds up query execution efficiency.",
-    "Modular software architecture enhances code reusability and scalability.",
-    "Debugging requires systematically tracking down unexpected runtime errors.",
-    "Continuous integration automates build verification and testing pipelines.",
-    "User experience design focuses on intuitive navigation and clarity.",
-    "Object-oriented programming organizes logic around distinct data models.",
-    "Functional paradigms emphasize immutable states and pure function calls.",
-    "Robust security practices shield dynamic applications from vulnerability risks.",
-    "RESTful API endpoints facilitate flexible client and server communication.",
-    "Cloud infrastructure provides elastic scaling for heavy network traffic.",
-    "Algorithmic time complexity analyzes execution efficiency under large datasets.",
-    "Comprehensive full-stack architecture balances server performance, database integrity, and UI state synchronization."
+    "Simple habits shape daily routines over time.", "Typing speed increases with regular accurate practice.",
+    "JavaScript powers interactive features across modern web apps.", "Clean code remains easy to read, test, and maintain.",
+    "Understanding basic data structures improves software problem solving.", "Web performance optimization ensures fast page load speeds.",
+    "Version control systems help engineering teams collaborate efficiently.", "Responsive design adapts user interfaces smoothly to mobile screens.",
+    "Database indexing dramatically speeds up query execution efficiency.", "Modular software architecture enhances code reusability and scalability.",
+    "Debugging requires systematically tracking down unexpected runtime errors.", "Continuous integration automates build verification and testing pipelines.",
+    "User experience design focuses on intuitive navigation and clarity.", "Object-oriented programming organizes logic around distinct data models.",
+    "Functional paradigms emphasize immutable states and pure function calls.", "Robust security practices shield dynamic applications from vulnerability risks.",
+    "RESTful API endpoints facilitate flexible client and server communication.", "Cloud infrastructure provides elastic scaling for heavy network traffic.",
+    "Algorithmic time complexity analyzes execution efficiency under large datasets.", "Comprehensive full-stack architecture balances server performance, database integrity, and UI state synchronization."
   ],
   hard: [
-    "Synchronous execution blocks operations until task completion.",
-    "Cryptographic hashing maps dynamic data into deterministic fixed-length digests.",
-    "WebSockets enable bidirectional, persistent TCP communication with ultra-low latency.",
-    "Polymorphism lets child classes override behaviors defined in base interfaces.",
-    "Microservice topologies decouple monolithic infrastructure into standalone domain services.",
-    "Distributed database consensus protocols maintain atomic transactional consistency across nodes.",
-    "Automated garbage collection reclaims unreferenced heap space without manual deallocation.",
-    "Just-In-Time compilation optimizes dynamic bytecode into native machine instructions on-the-fly.",
-    "Domain-Driven Design establishes bounded contexts around complex business logic boundaries.",
-    "Cross-Origin Resource Sharing restricts unauthorized browser requests across distinct origins.",
-    "Thread synchronization primitives prevent race conditions in concurrent multi-threaded execution loops.",
-    "Virtual memory abstractions dynamically map logical addresses to physical hardware locations.",
-    "Abstract syntax trees structure source code hierarchies for compiler parsing pipelines.",
-    "Containerization encapsulates code dependencies to guarantee consistent execution environments everywhere.",
-    "Load balancers distribute incoming network traffic across multiple redundant compute clusters.",
-    "Tail call optimization prevents stack overflow errors during deeply nested recursive function calls.",
-    "Event-driven architecture processes system state transitions asynchronously using decoupled messaging queues.",
-    "Content Delivery Networks strategically cache static assets geographically closer to end users.",
-    "GraphQL empowers client applications to request precisely structured fields, eliminating over-fetching.",
-    "Static type checking algorithms analyze AST nodes to enforce structural type safety prior to compilation runtime."
+    "Synchronous execution blocks operations until task completion.", "Cryptographic hashing maps dynamic data into deterministic fixed-length digests.",
+    "WebSockets enable bidirectional, persistent TCP communication with ultra-low latency.", "Polymorphism lets child classes override behaviors defined in base interfaces.",
+    "Microservice topologies decouple monolithic infrastructure into standalone domain services.", "Distributed database consensus protocols maintain atomic transactional consistency across nodes.",
+    "Automated garbage collection reclaims unreferenced heap space without manual deallocation.", "Just-In-Time compilation optimizes dynamic bytecode into native machine instructions on-the-fly.",
+    "Domain-Driven Design establishes bounded contexts around complex business logic boundaries.", "Cross-Origin Resource Sharing restricts unauthorized browser requests across distinct origins.",
+    "Thread synchronization primitives prevent race conditions in concurrent multi-threaded execution loops.", "Virtual memory abstractions dynamically map logical addresses to physical hardware locations.",
+    "Abstract syntax trees structure source code hierarchies for compiler parsing pipelines.", "Containerization encapsulates code dependencies to guarantee consistent execution environments everywhere.",
+    "Load balancers distribute incoming network traffic across multiple redundant compute clusters.", "Tail call optimization prevents stack overflow errors during deeply nested recursive function calls.",
+    "Event-driven architecture processes system state transitions asynchronously using decoupled messaging queues.", "Content Delivery Networks strategically cache static assets geographically closer to end users.",
+    "GraphQL empowers client applications to request precisely structured fields, eliminating over-fetching.", "Static type checking algorithms analyze AST nodes to enforce structural type safety prior to compilation runtime."
   ],
   programming: [
-    'console.log("Hello, World!");',
-    'let count = 0;\ncount += 1;',
-    'if (age >= 18) {\n  return true;\n}',
-    'for (let i = 0; i < 5; i++) {\n  console.log(i);\n}',
-    'const add = (a, b) => a + b;',
-    'const user = { name: "Alice", age: 25 };',
-    'const nums = [1, 2, 3].map(n => n * 2);',
-    'function greet(name = "Guest") {\n  return `Hello, ${name}`;\n}',
-    'try {\n  JSON.parse(data);\n} catch (e) {\n  console.error(e);\n}',
-    'class Car {\n  constructor(brand) {\n    this.brand = brand;\n  }\n}',
-    'const [first, ...rest] = [10, 20, 30, 40];',
-    'const delay = (ms) => new Promise(res => setTimeout(res, ms));',
-    'async function fetchData(url) {\n  const res = await fetch(url);\n  return res.json();\n}',
-    'const sum = numbers.reduce((acc, curr) => acc + curr, 0);',
-    'def factorial(n):\n    return 1 if n <= 1 else n * factorial(n - 1)',
-    'SELECT u.id, u.name FROM users u JOIN orders o ON u.id = o.user_id WHERE o.total > 100;',
-    'const memoize = (fn) => {\n  const cache = {};\n  return (...args) => cache[args] || (cache[args] = fn(...args));\n};',
-    'int binarySearch(int arr[], int l, int r, int x) {\n    if (r >= l) {\n        int mid = l + (r - l) / 2;\n        if (arr[mid] == x) return mid;\n    }\n    return -1;\n}',
-    'type UserProfile<T> = {\n  id: string;\n  data: T;\n  readonly createdAt: Date;\n};',
+    'console.log("Hello, World!");', 'let count = 0;\ncount += 1;', 'if (age >= 18) {\n  return true;\n}',
+    'for (let i = 0; i < 5; i++) {\n  console.log(i);\n}', 'const add = (a, b) => a + b;',
+    'const user = { name: "Alice", age: 25 };', 'const nums = [1, 2, 3].map(n => n * 2);',
+    'function greet(name = "Guest") {\n  return `Hello, ${name}`;\n}', 'try {\n  JSON.parse(data);\n} catch (e) {\n  console.error(e);\n}',
+    'class Car {\n  constructor(brand) {\n    this.brand = brand;\n  }\n}', 'const [first, ...rest] = [10, 20, 30, 40];',
+    'const delay = (ms) => new Promise(res => setTimeout(res, ms));', 'async function fetchData(url) {\n  const res = await fetch(url);\n  return res.json();\n}',
+    'const sum = numbers.reduce((acc, curr) => acc + curr, 0);', 'def factorial(n):\n    return 1 if n <= 1 else n * factorial(n - 1)',
+    'SELECT u.id, u.name FROM users u JOIN orders o ON u.id = o.user_id WHERE o.total > 100;', 'const memoize = (fn) => {\n  const cache = {};\n  return (...args) => cache[args] || (cache[args] = fn(...args));\n};',
+    'int binarySearch(int arr[], int l, int r, int x) {\n    if (r >= l) {\n        int mid = l + (r - l) / 2;\n        if (arr[mid] == x) return mid;\n    }\n    return -1;\n}', 'type UserProfile<T> = {\n  id: string;\n  data: T;\n  readonly createdAt: Date;\n};',
     'const mergeSort = (arr) => {\n  if (arr.length <= 1) return arr;\n  const mid = Math.floor(arr.length / 2);\n  const left = mergeSort(arr.slice(0, mid));\n  const right = mergeSort(arr.slice(right));\n  return merge(left, right);\n};'
   ]
 };
@@ -117,6 +74,7 @@ let currentModeType = "time";
 let currentSubOption = 60;
 
 let userStats = { bestWpm: 0, bestAcc: 0, totalTests: 0, totalWpmSum: 0, totalAccSum: 0 };
+let chartInstance = null;
 
 // ==========================================================================
 // 3. DOM ELEMENTS
@@ -167,6 +125,7 @@ const resTimeTakenEl = document.getElementById("res-time-taken");
 const retryBtn = document.getElementById("retry-btn");
 const nextLevelModalBtn = document.getElementById("next-level-modal-btn");
 const shareBtn = document.getElementById("share-btn");
+const deltaSummaryEl = document.getElementById("delta-summary");
 
 const usernameDisplay = document.getElementById("username-display");
 const editUsernameBtn = document.getElementById("edit-username-btn");
@@ -471,7 +430,7 @@ function calculateLiveStats() {
 }
 
 // ==========================================================================
-// 6. RESULTS & PERSISTENCE
+// 6. RESULTS, DELTA COMPARISON & CHART.JS
 // ==========================================================================
 function endTest() {
   clearInterval(timerInterval);
@@ -492,10 +451,92 @@ function endTest() {
   resWrongCharsEl.innerText = mistakes;
   resTimeTakenEl.innerText = `${timeTaken}s`;
 
+  processLevelAttempt(currentCategory, currentSubLevel, finalWpm, finalAcc);
+
   resultModal.classList.remove("hidden");
 
   saveAttempt(finalWpm, finalAcc, mistakes);
   updateGlobalStats(finalWpm, finalAcc);
+}
+
+function processLevelAttempt(category, levelIndex, wpm, accuracy) {
+  const levelKey = `tm_level_${category}_${levelIndex}`;
+  let history = JSON.parse(localStorage.getItem(levelKey)) || [];
+
+  const previousAttempt = history.length > 0 ? history[history.length - 1] : null;
+
+  const currentRun = { wpm, accuracy, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) };
+  history.push(currentRun);
+  localStorage.setItem(levelKey, JSON.stringify(history));
+
+  if (previousAttempt) {
+    const wpmDelta = wpm - previousAttempt.wpm;
+    const accDelta = accuracy - previousAttempt.accuracy;
+
+    const wpmSymbol = wpmDelta >= 0 ? "📈 +" : "📉 ";
+    const accSymbol = accDelta >= 0 ? "🎯 +" : "⚠️ ";
+    const wpmColor = wpmDelta >= 0 ? "var(--accent-color)" : "var(--danger-color)";
+    const accColor = accDelta >= 0 ? "var(--accent-color)" : "var(--danger-color)";
+
+    deltaSummaryEl.innerHTML = `
+      <p>Compared to Last Retry (Level ${levelIndex + 1}):</p>
+      <span class="delta-stat" style="color: ${wpmColor}">${wpmSymbol}${wpmDelta} WPM</span> | 
+      <span class="delta-stat" style="color: ${accColor}">${accSymbol}${accDelta}% Acc</span>
+    `;
+  } else {
+    deltaSummaryEl.innerHTML = `<p>🚀 <strong>First attempt</strong> on this level! Retry to track progress.</p>`;
+  }
+
+  renderLevelChart(history);
+}
+
+function renderLevelChart(history) {
+  const ctx = document.getElementById("levelChart").getContext("2d");
+
+  const labels = history.map((_, i) => `Try #${i + 1}`);
+  const wpmData = history.map(item => item.wpm);
+  const accData = history.map(item => item.accuracy);
+
+  if (chartInstance) chartInstance.destroy();
+
+  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  const textColor = isDark ? "#94a3b8" : "#64748b";
+  const gridColor = isDark ? "#334155" : "#e2e8f0";
+
+  chartInstance = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "WPM",
+          data: wpmData,
+          borderColor: "#3a86ff",
+          backgroundColor: "rgba(58, 134, 255, 0.15)",
+          fill: true,
+          tension: 0.3
+        },
+        {
+          label: "Accuracy (%)",
+          data: accData,
+          borderColor: "#10b981",
+          borderDash: [4, 4],
+          tension: 0.3
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { color: textColor, font: { size: 10 } } }
+      },
+      scales: {
+        x: { ticks: { color: textColor, font: { size: 9 } }, grid: { color: gridColor } },
+        y: { beginAtZero: true, ticks: { color: textColor, font: { size: 9 } }, grid: { color: gridColor } }
+      }
+    }
+  });
 }
 
 function resetTest() {
@@ -619,6 +660,12 @@ function toggleTheme() {
   document.documentElement.setAttribute("data-theme", next);
   localStorage.setItem("tm_theme", next);
   themeIcon.innerText = next === "dark" ? "☀️" : "🌙";
+  
+  if (!resultModal.classList.contains("hidden")) {
+    const levelKey = `tm_level_${currentCategory}_${currentSubLevel}`;
+    const history = JSON.parse(localStorage.getItem(levelKey)) || [];
+    if (history.length > 0) renderLevelChart(history);
+  }
 }
 
 function loadTheme() {
