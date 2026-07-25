@@ -1,112 +1,265 @@
 // ==========================================================================
-// 1. Passage Dataset (Standard Modes + Programming Mode)
+// 1. DATASETS (20 LEVELS PER CATEGORY)
 // ==========================================================================
 const PASSAGES = {
   easy: [
-    "The cat sat on the mat.",
-    "A quick brown fox jumps.",
-    "Sunlight fills the warm room.",
-    "Open the door and step outside.",
-    "Birds sing sweet songs in spring."
+    "Cat sat on mat.",
+    "Run in the sun.",
+    "A fast red car.",
+    "Dogs like to play.",
+    "The blue sky is clear.",
+    "Birds fly high in spring.",
+    "Fresh apples taste very good.",
+    "Always try your best today.",
+    "Water flows down the river.",
+    "A soft breeze blows gently.",
+    "Reading books helps you learn.",
+    "Small steps lead to progress.",
+    "Kindness brings joy to everyone.",
+    "Bright stars shine in the night.",
+    "Practice every day to get better.",
+    "Music makes people feel happy.",
+    "Walking outside helps calm your mind.",
+    "Hard work leads to great results.",
+    "Positive thinking changes your perspective on life.",
+    "Consistency and quiet focus pave the path toward true mastery."
   ],
   medium: [
-    "Programming isn't about what you know; it's about what you can figure out.",
-    "JavaScript is the language of the web, enabling interactive web experiences.",
-    "Success is not final, failure is not fatal: it is the courage to continue.",
-    "Clean code always looks like it was written by someone who cares."
+    "Simple habits shape daily routines over time.",
+    "Typing speed increases with regular accurate practice.",
+    "JavaScript powers interactive features across modern web apps.",
+    "Clean code remains easy to read, test, and maintain.",
+    "Understanding basic data structures improves software problem solving.",
+    "Web performance optimization ensures fast page load speeds.",
+    "Version control systems help engineering teams collaborate efficiently.",
+    "Responsive design adapts user interfaces smoothly to mobile screens.",
+    "Database indexing dramatically speeds up query execution efficiency.",
+    "Modular software architecture enhances code reusability and scalability.",
+    "Debugging requires systematically tracking down unexpected runtime errors.",
+    "Continuous integration automates build verification and testing pipelines.",
+    "User experience design focuses on intuitive navigation and clarity.",
+    "Object-oriented programming organizes logic around distinct data models.",
+    "Functional paradigms emphasize immutable states and pure function calls.",
+    "Robust security practices shield dynamic applications from vulnerability risks.",
+    "RESTful API endpoints facilitate flexible client and server communication.",
+    "Cloud infrastructure provides elastic scaling for heavy network traffic.",
+    "Algorithmic time complexity analyzes execution efficiency under large datasets.",
+    "Comprehensive full-stack architecture balances server performance, database integrity, and UI state synchronization."
   ],
   hard: [
-    "Synchronous execution blocks the thread, whereas asynchronous operations allow non-blocking primitives.",
-    "Cryptographic hash functions transform arbitrary data streams into fixed-length digest outputs securely.",
-    "WebSockets establish full-duplex persistent TCP socket channels for low-latency bidirectional communication."
+    "Synchronous execution blocks operations until task completion.",
+    "Cryptographic hashing maps dynamic data into deterministic fixed-length digests.",
+    "WebSockets enable bidirectional, persistent TCP communication with ultra-low latency.",
+    "Polymorphism lets child classes override behaviors defined in base interfaces.",
+    "Microservice topologies decouple monolithic infrastructure into standalone domain services.",
+    "Distributed database consensus protocols maintain atomic transactional consistency across nodes.",
+    "Automated garbage collection reclaims unreferenced heap space without manual deallocation.",
+    "Just-In-Time compilation optimizes dynamic bytecode into native machine instructions on-the-fly.",
+    "Domain-Driven Design establishes bounded contexts around complex business logic boundaries.",
+    "Cross-Origin Resource Sharing restricts unauthorized browser requests across distinct origins.",
+    "Thread synchronization primitives prevent race conditions in concurrent multi-threaded execution loops.",
+    "Virtual memory abstractions dynamically map logical addresses to physical hardware locations.",
+    "Abstract syntax trees structure source code hierarchies for compiler parsing pipelines.",
+    "Containerization encapsulates code dependencies to guarantee consistent execution environments everywhere.",
+    "Load balancers distribute incoming network traffic across multiple redundant compute clusters.",
+    "Tail call optimization prevents stack overflow errors during deeply nested recursive function calls.",
+    "Event-driven architecture processes system state transitions asynchronously using decoupled messaging queues.",
+    "Content Delivery Networks strategically cache static assets geographically closer to end users.",
+    "GraphQL empowers client applications to request precisely structured fields, eliminating over-fetching.",
+    "Static type checking algorithms analyze AST nodes to enforce structural type safety prior to compilation runtime."
   ],
-  // NEW FEATURE: Programming Mode dataset
   programming: [
-    "public class Main { public static void main(String[] args) { System.out.println(\"Hello World\"); } }",
-    "int factorial(int n) { return (n <= 1) ? 1 : n * factorial(n - 1); }",
-    "<div class=\"container\"><h1 class=\"title\">Welcome</h1><p>Start typing</p></div>",
-    "const fetchData = async (url) => { const res = await fetch(url); return res.json(); };"
+    'console.log("Hello, World!");',
+    'let count = 0;\ncount += 1;',
+    'if (age >= 18) {\n  return true;\n}',
+    'for (let i = 0; i < 5; i++) {\n  console.log(i);\n}',
+    'const add = (a, b) => a + b;',
+    'const user = { name: "Alice", age: 25 };',
+    'const nums = [1, 2, 3].map(n => n * 2);',
+    'function greet(name = "Guest") {\n  return `Hello, ${name}`;\n}',
+    'try {\n  JSON.parse(data);\n} catch (e) {\n  console.error(e);\n}',
+    'class Car {\n  constructor(brand) {\n    this.brand = brand;\n  }\n}',
+    'const [first, ...rest] = [10, 20, 30, 40];',
+    'const delay = (ms) => new Promise(res => setTimeout(res, ms));',
+    'async function fetchData(url) {\n  const res = await fetch(url);\n  return res.json();\n}',
+    'const sum = numbers.reduce((acc, curr) => acc + curr, 0);',
+    'def factorial(n):\n    return 1 if n <= 1 else n * factorial(n - 1)',
+    'SELECT u.id, u.name FROM users u JOIN orders o ON u.id = o.user_id WHERE o.total > 100;',
+    'const memoize = (fn) => {\n  const cache = {};\n  return (...args) => cache[args] || (cache[args] = fn(...args));\n};',
+    'int binarySearch(int arr[], int l, int r, int x) {\n    if (r >= l) {\n        int mid = l + (r - l) / 2;\n        if (arr[mid] == x) return mid;\n    }\n    return -1;\n}',
+    'type UserProfile<T> = {\n  id: string;\n  data: T;\n  readonly createdAt: Date;\n};',
+    'const mergeSort = (arr) => {\n  if (arr.length <= 1) return arr;\n  const mid = Math.floor(arr.length / 2);\n  const left = mergeSort(arr.slice(0, mid));\n  const right = mergeSort(arr.slice(right));\n  return merge(left, right);\n};'
   ]
 };
 
+const ACHIEVEMENTS = [
+  { id: "first_test", title: "First Test", desc: "Complete 1 test", icon: "🏆", check: (s) => s.totalTests >= 1 },
+  { id: "wpm_50", title: "Speed Demon", desc: "Achieve 50 WPM", icon: "🔥", check: (s) => s.bestWpm >= 50 },
+  { id: "wpm_100", title: "Lightning Fast", desc: "Achieve 100 WPM", icon: "⚡", check: (s) => s.bestWpm >= 100 },
+  { id: "acc_99", title: "Sniper", desc: "Achieve 99% accuracy", icon: "🎯", check: (s) => s.bestAcc >= 99 },
+  { id: "code_10", title: "Pro Coder", desc: "Complete 10 tests", icon: "💻", check: (s) => s.totalTests >= 10 }
+];
+
 // ==========================================================================
-// 2. State Management
+// 2. STATE MANAGEMENT
 // ==========================================================================
 let timer = 60;
 let timeRemaining = timer;
 let timerInterval = null;
 let isTesting = false;
-let isLoading = false;
-let totalErrors = 0;
 let totalTypedChars = 0;
 let currentPassage = "";
+let username = "";
 
-let currentDifficulty = "medium";
+let currentCategory = "medium";
 let currentSubLevel = 0;
+let currentModeType = "time";
+let currentSubOption = 60;
+
+let userStats = { bestWpm: 0, bestAcc: 0, totalTests: 0, totalWpmSum: 0, totalAccSum: 0 };
 
 // ==========================================================================
-// 3. DOM Elements Initialization
+// 3. DOM ELEMENTS
 // ==========================================================================
-const welcomeScreen = document.getElementById("welcome-screen");
-const enterAppBtn = document.getElementById("enter-app-btn");
+const loginOverlay = document.getElementById("login-overlay");
+const loginForm = document.getElementById("login-form");
+const loginLoading = document.getElementById("login-loading");
+const loginProgressBar = document.getElementById("login-progress-bar");
+const loadingText = document.getElementById("loading-text");
+const usernameInput = document.getElementById("username-input");
 const mainApp = document.getElementById("main-app");
-
-const quoteDisplayEl = document.getElementById("quote-display");
-const quoteInputEl = document.getElementById("quote-input");
-const progressBarEl = document.getElementById("progress-bar");
-const timerEl = document.getElementById("timer");
-const wpmEl = document.getElementById("wpm");
-const accuracyEl = document.getElementById("accuracy");
-const mistakesEl = document.getElementById("mistakes");
-
-const startBtn = document.getElementById("start-btn");
-const resetBtn = document.getElementById("reset-btn");
-const difficultySelect = document.getElementById("difficulty");
-const subLevelSelect = document.getElementById("sub-level");
-const prevLevelBtn = document.getElementById("prev-level-btn");
-const nextLevelBtn = document.getElementById("next-level-btn");
-const currentLevelBadge = document.getElementById("current-level-badge");
 
 const themeToggleBtn = document.getElementById("theme-toggle");
 const themeIcon = document.getElementById("theme-icon");
 
-// Results modal elements
-const resultsCard = document.getElementById("results-card");
-const finalWpmEl = document.getElementById("final-wpm");
-const finalAccuracyEl = document.getElementById("final-accuracy");
-const finalTotalCharsEl = document.getElementById("final-total-chars");
-const finalCorrectCharsEl = document.getElementById("final-correct-chars");
-const finalWrongCharsEl = document.getElementById("final-wrong-chars");
-const finalTimeTakenEl = document.getElementById("final-time-taken");
-const tryAgainBtn = document.getElementById("try-again-btn");
-const nextLevelModalBtn = document.getElementById("next-level-modal-btn");
+const categorySelect = document.getElementById("category-select");
+const subLevelSelect = document.getElementById("sub-level-select");
+const prevLevelBtn = document.getElementById("prev-level-btn");
+const nextLevelBtn = document.getElementById("next-level-btn");
 
-// History elements
+const modeTypeSelect = document.getElementById("mode-type-select");
+const subOptionSelect = document.getElementById("mode-sub-option");
+const subOptionLabel = document.getElementById("sub-option-label");
+
+const timerEl = document.getElementById("timer");
+const timerLabel = document.getElementById("timer-label");
+const wpmEl = document.getElementById("wpm");
+const accuracyEl = document.getElementById("accuracy");
+const mistakesEl = document.getElementById("mistakes");
+
+const quoteDisplayEl = document.getElementById("quote-display");
+const lineNumbersEl = document.getElementById("line-numbers");
+const quoteInputEl = document.getElementById("quote-input");
+const progressBarEl = document.getElementById("progress-bar");
+const modeBadgeEl = document.getElementById("mode-badge");
+
+const startBtn = document.getElementById("start-btn");
+const resetBtn = document.getElementById("reset-btn");
+
+const resultModal = document.getElementById("result-modal");
+const resultLevelBadge = document.getElementById("result-level-badge");
+const resWpmEl = document.getElementById("res-wpm");
+const resAccEl = document.getElementById("res-accuracy");
+const resTotalCharsEl = document.getElementById("res-total-chars");
+const resCorrectCharsEl = document.getElementById("res-correct-chars");
+const resWrongCharsEl = document.getElementById("res-wrong-chars");
+const resTimeTakenEl = document.getElementById("res-time-taken");
+const retryBtn = document.getElementById("retry-btn");
+const nextLevelModalBtn = document.getElementById("next-level-modal-btn");
+const shareBtn = document.getElementById("share-btn");
+
+const usernameDisplay = document.getElementById("username-display");
+const editUsernameBtn = document.getElementById("edit-username-btn");
 const historyListEl = document.getElementById("history-list");
 const clearHistoryBtn = document.getElementById("clear-history-btn");
-const loadingOverlay = document.getElementById("loading-overlay");
-const loadingSubtext = document.getElementById("loading-subtext");
 
 // ==========================================================================
-// 4. Initial Setup & Event Listeners
+// 4. INITIALIZATION & LOGIN TRANSITION
 // ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
   loadTheme();
-  populateSubLevelDropdown();
-  loadHistory();
-  loadCurrentLevelPassage();
+  checkExistingUser();
 
-  enterAppBtn.addEventListener("click", launchAppWithAnimation);
-  startBtn.addEventListener("click", startTest);
-  resetBtn.addEventListener("click", resetTest);
-  tryAgainBtn.addEventListener("click", resetTest);
-  quoteInputEl.addEventListener("input", handleTyping);
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const enteredName = usernameInput.value.trim();
+    if (enteredName) {
+      username = enteredName;
+      localStorage.setItem("tm_username", username);
+      triggerLoginLoading();
+    }
+  });
 
-  // Dropdown listeners
-  difficultySelect.addEventListener("change", () => {
-    currentDifficulty = difficultySelect.value;
+  setupEventListeners();
+});
+
+function checkExistingUser() {
+  const savedUser = localStorage.getItem("tm_username");
+  if (savedUser) {
+    username = savedUser;
+    enterMainAppDirectly();
+  }
+}
+
+function triggerLoginLoading() {
+  loginForm.classList.add("hidden");
+  loginLoading.classList.remove("hidden");
+
+  let progress = 0;
+  const messages = ["Initializing profile...", "Loading typing levels...", "Preparing workspace..."];
+
+  const interval = setInterval(() => {
+    progress += 25;
+    loginProgressBar.style.width = `${progress}%`;
+
+    if (progress === 50) loadingText.innerText = messages[1];
+    if (progress === 75) loadingText.innerText = messages[2];
+
+    if (progress >= 100) {
+      clearInterval(interval);
+      setTimeout(() => {
+        loginLoading.classList.add("hidden");
+        loginForm.classList.remove("hidden");
+        enterMainApp();
+      }, 300);
+    }
+  }, 200);
+}
+
+function enterMainAppDirectly() {
+  loginOverlay.classList.add("hidden");
+  mainApp.classList.remove("hidden");
+  usernameDisplay.innerText = username;
+  populateSubLevels();
+  loadUserData();
+  loadPassage();
+}
+
+function enterMainApp() {
+  loginOverlay.classList.add("hidden");
+  mainApp.classList.remove("hidden");
+  usernameDisplay.innerText = username;
+  populateSubLevels();
+  loadUserData();
+  loadPassage();
+}
+
+function populateSubLevels() {
+  subLevelSelect.innerHTML = "";
+  for (let i = 0; i < 20; i++) {
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.innerText = `Level ${i + 1}`;
+    subLevelSelect.appendChild(opt);
+  }
+  subLevelSelect.value = currentSubLevel;
+}
+
+function setupEventListeners() {
+  categorySelect.addEventListener("change", () => {
+    currentCategory = categorySelect.value;
     currentSubLevel = 0;
-    populateSubLevelDropdown();
+    subLevelSelect.value = 0;
     resetTest();
   });
 
@@ -118,303 +271,358 @@ document.addEventListener("DOMContentLoaded", () => {
   prevLevelBtn.addEventListener("click", () => changeSubLevel(-1));
   nextLevelBtn.addEventListener("click", () => changeSubLevel(1));
   nextLevelModalBtn.addEventListener("click", () => {
-    resultsCard.classList.add("hidden");
+    resultModal.classList.add("hidden");
     changeSubLevel(1);
   });
 
+  modeTypeSelect.addEventListener("change", () => {
+    currentModeType = modeTypeSelect.value;
+    populateSubOptions();
+    resetTest();
+  });
+
+  subOptionSelect.addEventListener("change", () => {
+    currentSubOption = parseInt(subOptionSelect.value);
+    resetTest();
+  });
+
+  startBtn.addEventListener("click", startTest);
+  resetBtn.addEventListener("click", resetTest);
+  retryBtn.addEventListener("click", resetTest);
+  shareBtn.addEventListener("click", shareResult);
+  quoteInputEl.addEventListener("input", handleTyping);
   themeToggleBtn.addEventListener("click", toggleTheme);
   clearHistoryBtn.addEventListener("click", clearHistory);
-});
-
-// Smooth intro animation transition
-function launchAppWithAnimation() {
-  welcomeScreen.classList.add("hidden");
-  loadingOverlay.classList.remove("hidden");
-  loadingSubtext.innerText = "Loading modules & visualizer...";
-
-  setTimeout(() => {
-    loadingOverlay.classList.add("hidden");
-    mainApp.classList.remove("hidden");
-  }, 1200);
-}
-
-function populateSubLevelDropdown() {
-  subLevelSelect.innerHTML = "";
-  const totalLevels = PASSAGES[currentDifficulty].length;
-  
-  for (let i = 0; i < totalLevels; i++) {
-    const opt = document.createElement("option");
-    opt.value = i;
-    opt.innerText = `Level ${i + 1}`;
-    subLevelSelect.appendChild(opt);
-  }
-  subLevelSelect.value = currentSubLevel;
+  editUsernameBtn.addEventListener("click", switchUser);
 }
 
 function changeSubLevel(delta) {
-  const maxLevels = PASSAGES[currentDifficulty].length;
   let newLevel = currentSubLevel + delta;
-  if (newLevel >= 0 && newLevel < maxLevels) {
+  if (newLevel >= 0 && newLevel < 20) {
     currentSubLevel = newLevel;
     subLevelSelect.value = currentSubLevel;
     resetTest();
   }
 }
 
-function loadCurrentLevelPassage() {
-  currentPassage = PASSAGES[currentDifficulty][currentSubLevel];
-  const maxLevels = PASSAGES[currentDifficulty].length;
-
-  const difficultyTitle = currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1);
-  currentLevelBadge.innerText = `${difficultyTitle} • Level ${currentSubLevel + 1} / ${maxLevels}`;
-
-  // Break passage into individual char spans for live tracking
-  quoteDisplayEl.innerHTML = "";
-  currentPassage.split("").forEach((char, index) => {
-    const charSpan = document.createElement("span");
-    charSpan.classList.add("char");
-    if (index === 0) charSpan.classList.add("current");
-    charSpan.innerText = char;
-    quoteDisplayEl.appendChild(charSpan);
-  });
-
-  resetStats();
+function populateSubOptions() {
+  subOptionSelect.innerHTML = "";
+  if (currentModeType === "time") {
+    subOptionLabel.innerText = "Limit:";
+    timerLabel.innerText = "Time Remaining";
+    [15, 30, 60, 120].forEach(sec => {
+      const opt = document.createElement("option");
+      opt.value = sec;
+      opt.innerText = `${sec} Seconds`;
+      if (sec === 60) opt.selected = true;
+      subOptionSelect.appendChild(opt);
+    });
+  } else {
+    subOptionLabel.innerText = "Words:";
+    timerLabel.innerText = "Time Elapsed";
+    [10, 50, 100].forEach(w => {
+      const opt = document.createElement("option");
+      opt.value = w;
+      opt.innerText = `${w} Words`;
+      if (w === 10) opt.selected = true;
+      subOptionSelect.appendChild(opt);
+    });
+  }
+  currentSubOption = parseInt(subOptionSelect.value);
 }
 
 // ==========================================================================
-// 5. Live Typing Analysis & Visualizer Logic
+// 5. PASSAGE RENDER & TYPING SYSTEM
 // ==========================================================================
+function loadPassage() {
+  currentPassage = PASSAGES[currentCategory][currentSubLevel];
+
+  if (currentModeType === "word") {
+    const words = currentPassage.split(" ");
+    currentPassage = words.slice(0, currentSubOption).join(" ");
+  }
+
+  const catTitle = currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1);
+  modeBadgeEl.innerText = `${catTitle} • Level ${currentSubLevel + 1} / 20`;
+
+  if (currentCategory === "programming") {
+    lineNumbersEl.classList.remove("hidden");
+    const lines = currentPassage.split("\n").length;
+    lineNumbersEl.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join("<br>");
+  } else {
+    lineNumbersEl.classList.add("hidden");
+  }
+
+  quoteDisplayEl.innerHTML = "";
+  currentPassage.split("").forEach((char, index) => {
+    const span = document.createElement("span");
+    span.classList.add("char");
+    if (index === 0) span.classList.add("current");
+    span.innerText = char;
+    quoteDisplayEl.appendChild(span);
+  });
+
+  resetStatsDisplay();
+}
+
 function startTest() {
-  if (isTesting || isLoading) return;
+  if (isTesting) return;
 
   isTesting = true;
   startBtn.disabled = true;
-  startBtn.innerText = "Test Active";
-  
   quoteInputEl.disabled = false;
   quoteInputEl.value = "";
   quoteInputEl.focus();
 
-  timerInterval = setInterval(() => {
-    timeRemaining--;
+  if (currentModeType === "time") {
+    timeRemaining = currentSubOption;
     timerEl.innerText = `${timeRemaining}s`;
 
-    if (timeRemaining > 0) {
+    timerInterval = setInterval(() => {
+      timeRemaining--;
+      timerEl.innerText = `${timeRemaining}s`;
       calculateLiveStats();
-    } else {
-      endTest();
-    }
-  }, 1000);
+      if (timeRemaining <= 0) endTest();
+    }, 1000);
+  } else {
+    timeRemaining = 0;
+    timerEl.innerText = `0s`;
+
+    timerInterval = setInterval(() => {
+      timeRemaining++;
+      timerEl.innerText = `${timeRemaining}s`;
+      calculateLiveStats();
+    }, 1000);
+  }
 }
 
-function handleTyping(e) {
+function handleTyping() {
   if (!isTesting) return;
 
   const arrayQuote = quoteDisplayEl.querySelectorAll(".char");
   const arrayValue = quoteInputEl.value.split("");
 
-  let errorsThisFrame = 0;
+  let mistakes = 0;
   totalTypedChars = arrayValue.length;
 
-  // Real-time character highlighting
-  arrayQuote.forEach((characterSpan, index) => {
+  arrayQuote.forEach((charSpan, index) => {
     const typedChar = arrayValue[index];
-
-    characterSpan.classList.remove("current");
+    charSpan.classList.remove("current");
 
     if (typedChar == null) {
-      characterSpan.classList.remove("correct", "incorrect");
-    } else if (typedChar === characterSpan.innerText) {
-      characterSpan.classList.add("correct");
-      characterSpan.classList.remove("incorrect");
+      charSpan.classList.remove("correct", "incorrect");
+    } else if (typedChar === charSpan.innerText) {
+      charSpan.classList.add("correct");
+      charSpan.classList.remove("incorrect");
     } else {
-      characterSpan.classList.add("incorrect");
-      characterSpan.classList.remove("correct");
-      errorsThisFrame++;
+      charSpan.classList.add("incorrect");
+      charSpan.classList.remove("correct");
+      mistakes++;
     }
   });
 
-  // Set current cursor indicator
   if (arrayValue.length < arrayQuote.length) {
     arrayQuote[arrayValue.length].classList.add("current");
   }
 
-  // Update progress bar percentage
+  if (arrayValue.length > currentPassage.length) {
+    quoteInputEl.value = quoteInputEl.value.substring(0, currentPassage.length);
+  }
+
   const progressPercent = Math.min((arrayValue.length / currentPassage.length) * 100, 100);
   progressBarEl.style.width = `${progressPercent}%`;
 
-  totalErrors = errorsThisFrame;
-  mistakesEl.innerText = totalErrors;
-
-  // Trigger Keyboard Visualizer Feedback
-  if (e.inputType !== "deleteContentBackward" && arrayValue.length > 0) {
-    const lastTypedChar = arrayValue[arrayValue.length - 1];
-    const targetChar = currentPassage[arrayValue.length - 1];
-    highlightVirtualKey(lastTypedChar, lastTypedChar === targetChar);
-  }
-
+  mistakesEl.innerText = mistakes;
   calculateLiveStats();
 
-  // End test early if completed full snippet
-  if (arrayValue.length >= currentPassage.length) {
-    endTest();
+  if (arrayValue.length > 0) {
+    const lastChar = arrayValue[arrayValue.length - 1];
+    const targetChar = currentPassage[arrayValue.length - 1];
+    highlightVirtualKey(lastChar, lastChar === targetChar);
   }
+
+  if (arrayValue.length >= currentPassage.length) endTest();
 }
 
-// Keyboard Visualizer: Highlights pressed key green/red
 function highlightVirtualKey(char, isCorrect) {
-  const keyClass = isCorrect ? "key-correct" : "key-incorrect";
-  const searchChar = char.toLowerCase();
-  
-  const keyEl = document.querySelector(`.key[data-key="${searchChar}"]`);
+  const keyChar = char === " " ? " " : char.toLowerCase();
+  const keyEl = document.querySelector(`.key[data-key="${keyChar}"]`);
   if (keyEl) {
-    keyEl.classList.add(keyClass);
-    setTimeout(() => {
-      keyEl.classList.remove("key-correct", "key-incorrect");
-    }, 200);
+    const cls = isCorrect ? "key-correct" : "key-incorrect";
+    keyEl.classList.add(cls);
+    setTimeout(() => keyEl.classList.remove("key-correct", "key-incorrect"), 150);
   }
 }
 
 function calculateLiveStats() {
-  const timeElapsed = timer - timeRemaining;
-  const typedText = quoteInputEl.value;
-  const typedCharsCount = typedText.length;
+  const elapsed = currentModeType === "time" ? (currentSubOption - timeRemaining) : timeRemaining;
+  const typedCharsCount = quoteInputEl.value.length;
 
   let wpm = 0;
-  if (timeElapsed > 0) {
-    wpm = Math.round((typedCharsCount / 5) / (timeElapsed / 60));
-  }
-  wpmEl.innerText = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
+  if (elapsed > 0) wpm = Math.round((typedCharsCount / 5) / (elapsed / 60));
+  wpmEl.innerText = isNaN(wpm) || wpm < 0 || wpm === Infinity ? 0 : wpm;
 
+  const mistakes = parseInt(mistakesEl.innerText);
   let accuracy = 100;
   if (typedCharsCount > 0) {
-    const correctChars = typedCharsCount - totalErrors;
-    accuracy = Math.round((correctChars / typedCharsCount) * 100);
+    accuracy = Math.round(((typedCharsCount - mistakes) / typedCharsCount) * 100);
   }
-  accuracyEl.innerText = `${accuracy < 0 ? 0 : accuracy}%`;
+  accuracyEl.innerText = `${Math.max(0, accuracy)}%`;
 }
 
 // ==========================================================================
-// 6. Results & Score History Handling
+// 6. RESULTS & PERSISTENCE
 // ==========================================================================
 function endTest() {
   clearInterval(timerInterval);
   isTesting = false;
   quoteInputEl.disabled = true;
   startBtn.disabled = false;
-  startBtn.innerText = "Start Test";
 
-  const timeTaken = timer - timeRemaining;
-  const finalWpm = wpmEl.innerText;
-  const finalAccuracy = accuracyEl.innerText;
-  const correctChars = Math.max(0, totalTypedChars - totalErrors);
+  const timeTaken = currentModeType === "time" ? (currentSubOption - timeRemaining) : timeRemaining;
+  const finalWpm = parseInt(wpmEl.innerText) || 0;
+  const finalAcc = parseInt(accuracyEl.innerText) || 0;
+  const mistakes = parseInt(mistakesEl.innerText) || 0;
 
-  // Populate Result Card Dashboard
-  finalWpmEl.innerText = finalWpm;
-  finalAccuracyEl.innerText = finalAccuracy;
-  finalTotalCharsEl.innerText = totalTypedChars;
-  finalCorrectCharsEl.innerText = correctChars;
-  finalWrongCharsEl.innerText = totalErrors;
-  finalTimeTakenEl.innerText = `${timeTaken}s`;
+  resultLevelBadge.innerText = `${currentCategory.toUpperCase()} • LEVEL ${currentSubLevel + 1}`;
+  resWpmEl.innerText = finalWpm;
+  resAccEl.innerText = `${finalAcc}%`;
+  resTotalCharsEl.innerText = totalTypedChars;
+  resCorrectCharsEl.innerText = Math.max(0, totalTypedChars - mistakes);
+  resWrongCharsEl.innerText = mistakes;
+  resTimeTakenEl.innerText = `${timeTaken}s`;
 
-  resultsCard.classList.remove("hidden");
-  saveScore(finalWpm, finalAccuracy, totalErrors);
+  resultModal.classList.remove("hidden");
+
+  saveAttempt(finalWpm, finalAcc, mistakes);
+  updateGlobalStats(finalWpm, finalAcc);
 }
 
 function resetTest() {
   clearInterval(timerInterval);
   isTesting = false;
-  isLoading = false;
   quoteInputEl.disabled = true;
   quoteInputEl.value = "";
   progressBarEl.style.width = "0%";
-  
   startBtn.disabled = false;
-  startBtn.innerText = "Start Test";
-  
-  resultsCard.classList.add("hidden");
-  loadCurrentLevelPassage();
+  resultModal.classList.add("hidden");
+  loadPassage();
 }
 
-function resetStats() {
-  timeRemaining = timer;
-  timerEl.innerText = `${timer}s`;
+function resetStatsDisplay() {
+  timeRemaining = currentModeType === "time" ? currentSubOption : 0;
+  timerEl.innerText = `${timeRemaining}s`;
   wpmEl.innerText = "0";
   accuracyEl.innerText = "100%";
   mistakesEl.innerText = "0";
-  totalErrors = 0;
-  totalTypedChars = 0;
 }
 
-// LocalStorage Persistence
-function saveScore(wpm, accuracy, mistakes) {
-  const history = JSON.parse(localStorage.getItem("typingHistoryAdvanced")) || [];
-  
-  const now = new Date();
-  const formattedDate = `${now.getDate()} ${now.toLocaleString('default', { month: 'short' })}`;
-  
-  const newEntry = {
-    date: formattedDate,
-    time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-    wpm: wpm,
-    accuracy: accuracy,
-    mistakes: mistakes
-  };
+function shareResult() {
+  const text = `🎮 I cleared ${currentCategory} Level ${currentSubLevel + 1} with ${resWpmEl.innerText} WPM and ${resAccEl.innerText} accuracy on TypeMaster Pro!`;
+  navigator.clipboard.writeText(text);
+  shareBtn.innerText = "✅ Copied!";
+  setTimeout(() => shareBtn.innerText = "📋 Share", 2000);
+}
 
-  history.unshift(newEntry);
+function saveAttempt(wpm, accuracy, mistakes) {
+  const history = JSON.parse(localStorage.getItem("tm_history")) || [];
+  const now = new Date();
+  const dateStr = `${now.getDate()} ${now.toLocaleString('default', { month: 'short' })}`;
+
+  history.unshift({ date: dateStr, wpm, accuracy: `${accuracy}%`, mistakes });
   if (history.length > 10) history.pop();
 
-  localStorage.setItem("typingHistoryAdvanced", JSON.stringify(history));
+  localStorage.setItem("tm_history", JSON.stringify(history));
   renderHistory(history);
 }
 
-function loadHistory() {
-  const history = JSON.parse(localStorage.getItem("typingHistoryAdvanced")) || [];
+function updateGlobalStats(wpm, acc) {
+  userStats.totalTests++;
+  userStats.totalWpmSum += wpm;
+  userStats.totalAccSum += acc;
+  if (wpm > userStats.bestWpm) userStats.bestWpm = wpm;
+  if (acc > userStats.bestAcc) userStats.bestAcc = acc;
+
+  localStorage.setItem("tm_stats", JSON.stringify(userStats));
+  renderStats();
+  renderAchievements();
+}
+
+function loadUserData() {
+  const savedStats = localStorage.getItem("tm_stats");
+  if (savedStats) userStats = JSON.parse(savedStats);
+
+  const history = JSON.parse(localStorage.getItem("tm_history")) || [];
   renderHistory(history);
+  renderStats();
+  renderAchievements();
+}
+
+function renderStats() {
+  document.getElementById("stat-best-wpm").innerText = `${userStats.bestWpm} WPM`;
+  const avgWpm = userStats.totalTests > 0 ? Math.round(userStats.totalWpmSum / userStats.totalTests) : 0;
+  document.getElementById("stat-avg-wpm").innerText = `${avgWpm} WPM`;
+  const avgAcc = userStats.totalTests > 0 ? Math.round(userStats.totalAccSum / userStats.totalTests) : 0;
+  document.getElementById("stat-avg-acc").innerText = `${avgAcc}%`;
+  document.getElementById("stat-total-tests").innerText = userStats.totalTests;
+}
+
+function renderAchievements() {
+  const container = document.getElementById("achievements-list");
+  container.innerHTML = "";
+  ACHIEVEMENTS.forEach(ach => {
+    const isUnlocked = ach.check(userStats);
+    const card = document.createElement("div");
+    card.className = `badge-card ${isUnlocked ? 'unlocked' : ''}`;
+    card.innerHTML = `
+      <span class="badge-icon">${ach.icon}</span>
+      <div class="badge-info">
+        <h4>${ach.title}</h4>
+        <p>${ach.desc}</p>
+      </div>
+    `;
+    container.appendChild(card);
+  });
 }
 
 function renderHistory(history) {
   historyListEl.innerHTML = "";
-
   if (history.length === 0) {
-    historyListEl.innerHTML = `<li class="history-item">No past attempts recorded yet.</li>`;
+    historyListEl.innerHTML = `<li class="history-item">No past attempts recorded.</li>`;
     return;
   }
-
   history.forEach(item => {
     const li = document.createElement("li");
-    li.classList.add("history-item");
+    li.className = "history-item";
     li.innerHTML = `
       <span><strong>${item.date}</strong></span>
-      <span><strong>${item.wpm} WPM</strong> | ${item.accuracy} Accuracy</span>
+      <span><strong>${item.wpm} WPM</strong> | ${item.accuracy} Acc | ${item.mistakes} Mistakes</span>
     `;
     historyListEl.appendChild(li);
   });
 }
 
 function clearHistory() {
-  localStorage.removeItem("typingHistoryAdvanced");
-  loadHistory();
+  localStorage.removeItem("tm_history");
+  renderHistory([]);
 }
 
-// ==========================================================================
-// 7. Theme Control
-// ==========================================================================
-function toggleTheme() {
-  const currentTheme = document.documentElement.getAttribute("data-theme");
-  const newTheme = currentTheme === "dark" ? "light" : "dark";
+function switchUser() {
+  localStorage.removeItem("tm_username");
+  mainApp.classList.add("hidden");
+  loginOverlay.classList.remove("hidden");
+}
 
-  document.documentElement.setAttribute("data-theme", newTheme);
-  localStorage.setItem("typingTheme", newTheme);
-  updateThemeIcon(newTheme);
+function toggleTheme() {
+  const current = document.documentElement.getAttribute("data-theme");
+  const next = current === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  localStorage.setItem("tm_theme", next);
+  themeIcon.innerText = next === "dark" ? "☀️" : "🌙";
 }
 
 function loadTheme() {
-  const savedTheme = localStorage.getItem("typingTheme") || "light";
-  document.documentElement.setAttribute("data-theme", savedTheme);
-  updateThemeIcon(savedTheme);
-}
-
-function updateThemeIcon(theme) {
-  themeIcon.innerText = theme === "dark" ? "☀️" : "🌙";
+  const saved = localStorage.getItem("tm_theme") || "dark";
+  document.documentElement.setAttribute("data-theme", saved);
+  themeIcon.innerText = saved === "dark" ? "☀️" : "🌙";
 }
