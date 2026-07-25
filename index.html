@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TypeMaster Pro</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Chart.js CDN for Progress Chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -21,7 +23,6 @@
         <button type="submit" id="login-submit-btn" class="btn primary-btn full-width">Start Typing</button>
       </form>
 
-      <!-- LOADING INDICATOR -->
       <div id="login-loading" class="login-loading hidden">
         <div class="spinner"></div>
         <p id="loading-text">Loading workspace...</p>
@@ -55,7 +56,6 @@
     <!-- DASHBOARD GRID -->
     <main class="dashboard">
       
-      <!-- LEFT / TOP: CONTROLS & TEST AREA -->
       <section class="test-section card">
         
         <!-- LEVEL & MODE SELECTORS -->
@@ -118,7 +118,6 @@
           </div>
         </div>
 
-        <!-- PROGRESS BAR -->
         <div class="progress-track">
           <div id="progress-bar" class="progress-fill"></div>
         </div>
@@ -139,7 +138,7 @@
           <button id="reset-btn" class="btn secondary-btn">Reset</button>
         </div>
 
-        <!-- KEYBOARD VISUALIZER (STYLED PROPERLY) -->
+        <!-- KEYBOARD VISUALIZER -->
         <div class="keyboard-container">
           <div class="keyboard-header">Virtual Keyboard Visualizer <span class="subtext">Live Key Feedback</span></div>
           <div class="keyboard-grid">
@@ -160,9 +159,8 @@
 
       </section>
 
-      <!-- RIGHT / BOTTOM: STATS & ACHIEVEMENTS -->
+      <!-- SIDEBAR -->
       <aside class="sidebar">
-        <!-- STATS CARD -->
         <div class="card">
           <h3>Your Performance</h3>
           <div class="stats-grid">
@@ -185,13 +183,11 @@
           </div>
         </div>
 
-        <!-- ACHIEVEMENTS -->
         <div class="card">
           <h3>Achievements</h3>
           <div id="achievements-list" class="achievements-list"></div>
         </div>
 
-        <!-- RECENT HISTORY -->
         <div class="card">
           <div class="card-header">
             <h3>Recent History</h3>
@@ -202,11 +198,12 @@
       </aside>
     </main>
 
-    <!-- RESULT MODAL -->
+    <!-- RESULT MODAL WITH DELTA COMPARISON & RETRY CHART -->
     <div id="result-modal" class="modal-overlay hidden">
       <div class="card modal-card">
         <span id="result-level-badge" class="badge">LEVEL COMPLETED</span>
         <h2>Test Results</h2>
+        
         <div class="result-stats">
           <div class="result-main">
             <span class="res-num" id="res-wpm">0</span>
@@ -217,15 +214,26 @@
             <span class="res-label">Accuracy</span>
           </div>
         </div>
-        <hr>
+
+        <!-- DELTA COMPARISON BOX -->
+        <div id="delta-summary" class="delta-box"></div>
+
+        <!-- LEVEL PROGRESS CHART CANVAS -->
+        <div class="chart-container">
+          <canvas id="levelChart"></canvas>
+        </div>
+
+        <hr style="margin: 0.75rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
         <div class="result-details">
           <p>Total Typed Characters: <strong id="res-total-chars">0</strong></p>
           <p>Correct Characters: <strong id="res-correct-chars" class="success">0</strong></p>
           <p>Mistakes: <strong id="res-wrong-chars" class="danger">0</strong></p>
           <p>Time Taken: <strong id="res-time-taken">0s</strong></p>
         </div>
+
         <div class="modal-actions">
-          <button id="retry-btn" class="btn secondary-btn">Retry</button>
+          <button id="retry-btn" class="btn secondary-btn">Retry Level</button>
           <button id="next-level-modal-btn" class="btn primary-btn">Next Level ➔</button>
           <button id="share-btn" class="btn icon-btn" title="Share Result">📋 Share</button>
         </div>
