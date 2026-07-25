@@ -1,191 +1,236 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Advanced Typing Speed Tester</title>
+  <title>TypeMaster Pro</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Landing / Welcome Overlay -->
-  <div id="welcome-screen" class="welcome-screen">
-    <div class="welcome-card">
-      <div class="welcome-badge">Pro Typing Suite</div>
-      <h1>Master Your Typing Speed</h1>
-      <p>Test your typing performance across 60 levels, including real coding passages in Programming Mode!</p>
+  <!-- LOGIN OVERLAY -->
+  <div id="login-overlay" class="overlay">
+    <div class="card login-card">
+      <h2>Welcome to TypeMaster Pro</h2>
+      <p>Enter your username to start tracking your typing speed & stats.</p>
       
-      <div class="welcome-features">
-        <div class="feature-item">⚡ Real-time Character Highlighting</div>
-        <div class="feature-item">💻 Programming Mode (Java, C, HTML)</div>
-        <div class="feature-item">⌨️ Interactive Virtual Keyboard Visualizer</div>
-        <div class="feature-item">📊 Detailed Results & Score History</div>
-      </div>
+      <form id="login-form">
+        <div class="input-group">
+          <input type="text" id="username-input" placeholder="e.g. SpeedRacer" required autocomplete="off">
+        </div>
+        <button type="submit" id="login-submit-btn" class="btn primary-btn full-width">Start Typing</button>
+      </form>
 
-      <button id="enter-app-btn" class="btn btn-primary btn-large">Start Session ➔</button>
+      <!-- LOADING INDICATOR -->
+      <div id="login-loading" class="login-loading hidden">
+        <div class="spinner"></div>
+        <p id="loading-text">Loading workspace...</p>
+        <div class="progress-track">
+          <div id="login-progress-bar" class="progress-fill"></div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Loading Animation Overlay -->
-  <div id="loading-overlay" class="loading-overlay hidden">
-    <div class="loading-content">
-      <div class="spinner"></div>
-      <p class="loading-text">Preparing Environment...</p>
-      <p id="loading-subtext" class="loading-subtext">Initializing dataset & visualizer...</p>
-    </div>
-  </div>
-
-  <!-- Main Application Container -->
-  <div id="main-app" class="container hidden">
-    
-    <!-- Top Header -->
-    <header class="header">
-      <div>
-        <h1>Typing Speed Tester</h1>
-        <p class="subtitle">Boost your speed, accuracy, and coding muscle memory</p>
+  <!-- MAIN APPLICATION -->
+  <div id="main-app" class="app-container hidden">
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="brand">
+        <span class="logo-icon">⌨️</span>
+        <div>
+          <h1>TypeMaster <span class="badge">PRO</span></h1>
+          <p class="subtitle">Elevate your typing speed and coding accuracy</p>
+        </div>
       </div>
-      <button id="theme-toggle" class="btn-icon" aria-label="Toggle Theme">
-        <span id="theme-icon">🌙</span>
-      </button>
+      <div class="user-controls">
+        <span class="user-greeting">👋 <strong id="username-display">User</strong></span>
+        <button id="edit-username-btn" class="btn icon-btn" title="Switch User">switch</button>
+        <button id="theme-toggle" class="btn icon-btn" title="Toggle Theme">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
     </header>
 
-    <!-- Controls & Live Stats Dashboard -->
-    <div class="controls-card">
-      <div class="level-navigation">
-        <div class="control-group">
-          <label for="difficulty">Category:</label>
-          <select id="difficulty">
-            <option value="easy">Easy</option>
-            <option value="medium" selected>Medium</option>
-            <option value="hard">Hard</option>
-            <option value="programming">Programming Mode</option>
-          </select>
+    <!-- DASHBOARD GRID -->
+    <main class="dashboard">
+      
+      <!-- LEFT / TOP: CONTROLS & TEST AREA -->
+      <section class="test-section card">
+        
+        <!-- LEVEL & MODE SELECTORS -->
+        <div class="control-panel">
+          <div class="selector-group">
+            <label for="category-select">Category:</label>
+            <select id="category-select" class="dropdown">
+              <option value="easy">Easy</option>
+              <option value="medium" selected>Medium</option>
+              <option value="hard">Hard</option>
+              <option value="programming">Programming</option>
+            </select>
+          </div>
+
+          <div class="selector-group">
+            <label for="sub-level-select">Level:</label>
+            <div class="level-nav">
+              <button id="prev-level-btn" class="btn sm-btn">◀ Prev</button>
+              <select id="sub-level-select" class="dropdown sm-dropdown"></select>
+              <button id="next-level-btn" class="btn sm-btn">Next ▶</button>
+            </div>
+          </div>
+
+          <div class="selector-group">
+            <label for="mode-type-select">Mode:</label>
+            <select id="mode-type-select" class="dropdown">
+              <option value="time" selected>Time Mode</option>
+              <option value="word">Word Mode</option>
+            </select>
+          </div>
+
+          <div class="selector-group">
+            <label id="sub-option-label" for="mode-sub-option">Limit:</label>
+            <select id="mode-sub-option" class="dropdown sm-dropdown">
+              <option value="15">15 Seconds</option>
+              <option value="30">30 Seconds</option>
+              <option value="60" selected>60 Seconds</option>
+              <option value="120">120 Seconds</option>
+            </select>
+          </div>
         </div>
 
-        <div class="control-group">
-          <label for="sub-level">Level:</label>
-          <select id="sub-level"></select>
+        <!-- REAL-TIME HUD -->
+        <div class="hud">
+          <div class="hud-item">
+            <span class="hud-label" id="timer-label">Time Remaining</span>
+            <span class="hud-value" id="timer">60s</span>
+          </div>
+          <div class="hud-item">
+            <span class="hud-label">Realtime WPM</span>
+            <span class="hud-value highlight" id="wpm">0</span>
+          </div>
+          <div class="hud-item">
+            <span class="hud-label">Accuracy</span>
+            <span class="hud-value" id="accuracy">100%</span>
+          </div>
+          <div class="hud-item">
+            <span class="hud-label">Mistakes</span>
+            <span class="hud-value danger" id="mistakes">0</span>
+          </div>
         </div>
 
-        <div class="level-buttons">
-          <button id="prev-level-btn" class="btn-sm" title="Previous Level">◀ Prev</button>
-          <button id="next-level-btn" class="btn-sm" title="Next Level">Next ▶</button>
+        <!-- PROGRESS BAR -->
+        <div class="progress-track">
+          <div id="progress-bar" class="progress-fill"></div>
         </div>
-      </div>
 
-      <!-- Live Performance Dashboard -->
-      <div class="stats-grid">
-        <div class="stat-box">
-          <span class="stat-label">Time Left</span>
-          <span id="timer" class="stat-value">60s</span>
+        <!-- TYPING TEST BOX -->
+        <div class="typing-box-container">
+          <div class="mode-badge" id="mode-badge">Medium • Level 1 / 20</div>
+          <div class="code-editor-wrapper">
+            <div id="line-numbers" class="line-numbers hidden"></div>
+            <div id="quote-display" class="quote-display"></div>
+          </div>
+          <textarea id="quote-input" class="quote-input" placeholder="Click 'Start Test' below to activate typing..." disabled autocomplete="off" spellcheck="false"></textarea>
         </div>
-        <div class="stat-box">
-          <span class="stat-label">WPM</span>
-          <span id="wpm" class="stat-value">0</span>
+
+        <!-- ACTION BUTTONS -->
+        <div class="action-bar">
+          <button id="start-btn" class="btn primary-btn">Start Test</button>
+          <button id="reset-btn" class="btn secondary-btn">Reset</button>
         </div>
-        <div class="stat-box">
-          <span class="stat-label">Accuracy</span>
-          <span id="accuracy" class="stat-value">100%</span>
+
+        <!-- KEYBOARD VISUALIZER (STYLED PROPERLY) -->
+        <div class="keyboard-container">
+          <div class="keyboard-header">Virtual Keyboard Visualizer <span class="subtext">Live Key Feedback</span></div>
+          <div class="keyboard-grid">
+            <div class="kb-row">
+              <div class="key" data-key="q">Q</div><div class="key" data-key="w">W</div><div class="key" data-key="e">E</div><div class="key" data-key="r">R</div><div class="key" data-key="t">T</div><div class="key" data-key="y">Y</div><div class="key" data-key="u">U</div><div class="key" data-key="i">I</div><div class="key" data-key="o">O</div><div class="key" data-key="p">P</div>
+            </div>
+            <div class="kb-row">
+              <div class="key" data-key="a">A</div><div class="key" data-key="s">S</div><div class="key" data-key="d">D</div><div class="key" data-key="f">F</div><div class="key" data-key="g">G</div><div class="key" data-key="h">H</div><div class="key" data-key="j">J</div><div class="key" data-key="k">K</div><div class="key" data-key="l">L</div>
+            </div>
+            <div class="kb-row">
+              <div class="key" data-key="z">Z</div><div class="key" data-key="x">X</div><div class="key" data-key="c">C</div><div class="key" data-key="v">V</div><div class="key" data-key="b">B</div><div class="key" data-key="n">N</div><div class="key" data-key="m">M</div>
+            </div>
+            <div class="kb-row">
+              <div class="key space-key" data-key=" ">Space</div>
+            </div>
+          </div>
         </div>
-        <div class="stat-box">
-          <span class="stat-label">Mistakes</span>
-          <span id="mistakes" class="stat-value">0</span>
+
+      </section>
+
+      <!-- RIGHT / BOTTOM: STATS & ACHIEVEMENTS -->
+      <aside class="sidebar">
+        <!-- STATS CARD -->
+        <div class="card">
+          <h3>Your Performance</h3>
+          <div class="stats-grid">
+            <div class="mini-stat">
+              <span class="stat-title">Best Speed</span>
+              <span class="stat-num" id="stat-best-wpm">0 WPM</span>
+            </div>
+            <div class="mini-stat">
+              <span class="stat-title">Avg Speed</span>
+              <span class="stat-num" id="stat-avg-wpm">0 WPM</span>
+            </div>
+            <div class="mini-stat">
+              <span class="stat-title">Avg Accuracy</span>
+              <span class="stat-num" id="stat-avg-acc">0%</span>
+            </div>
+            <div class="mini-stat">
+              <span class="stat-title">Tests Completed</span>
+              <span class="stat-num" id="stat-total-tests">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ACHIEVEMENTS -->
+        <div class="card">
+          <h3>Achievements</h3>
+          <div id="achievements-list" class="achievements-list"></div>
+        </div>
+
+        <!-- RECENT HISTORY -->
+        <div class="card">
+          <div class="card-header">
+            <h3>Recent History</h3>
+            <button id="clear-history-btn" class="btn text-btn">Clear</button>
+          </div>
+          <ul id="history-list" class="history-list"></ul>
+        </div>
+      </aside>
+    </main>
+
+    <!-- RESULT MODAL -->
+    <div id="result-modal" class="modal-overlay hidden">
+      <div class="card modal-card">
+        <span id="result-level-badge" class="badge">LEVEL COMPLETED</span>
+        <h2>Test Results</h2>
+        <div class="result-stats">
+          <div class="result-main">
+            <span class="res-num" id="res-wpm">0</span>
+            <span class="res-label">Words Per Minute</span>
+          </div>
+          <div class="result-main">
+            <span class="res-num" id="res-accuracy">0%</span>
+            <span class="res-label">Accuracy</span>
+          </div>
+        </div>
+        <hr>
+        <div class="result-details">
+          <p>Total Typed Characters: <strong id="res-total-chars">0</strong></p>
+          <p>Correct Characters: <strong id="res-correct-chars" class="success">0</strong></p>
+          <p>Mistakes: <strong id="res-wrong-chars" class="danger">0</strong></p>
+          <p>Time Taken: <strong id="res-time-taken">0s</strong></p>
+        </div>
+        <div class="modal-actions">
+          <button id="retry-btn" class="btn secondary-btn">Retry</button>
+          <button id="next-level-modal-btn" class="btn primary-btn">Next Level ➔</button>
+          <button id="share-btn" class="btn icon-btn" title="Share Result">📋 Share</button>
         </div>
       </div>
     </div>
-
-    <!-- Main Test Area -->
-    <main class="test-card">
-      <div class="test-header-bar">
-        <span id="current-level-badge" class="level-indicator-badge">Medium • Level 1 / 20</span>
-        <!-- Progress Bar -->
-        <div class="progress-container">
-          <div id="progress-bar" class="progress-bar"></div>
-        </div>
-      </div>
-
-      <div id="quote-display" class="quote-display">Loading passage...</div>
-
-      <textarea 
-        id="quote-input" 
-        class="quote-input" 
-        placeholder="Click 'Start Test' or start typing here..." 
-        disabled
-        spellcheck="false"
-      ></textarea>
-
-      <div class="button-group">
-        <button id="start-btn" class="btn btn-primary">Start Test</button>
-        <button id="reset-btn" class="btn btn-secondary">Reset</button>
-      </div>
-    </main>
-
-    <!-- Virtual Keyboard Visualizer -->
-    <section class="keyboard-card">
-      <h3>Keyboard Visualizer</h3>
-      <div id="keyboard" class="keyboard">
-        <div class="key-row">
-          <div class="key" data-key="q">Q</div><div class="key" data-key="w">W</div><div class="key" data-key="e">E</div><div class="key" data-key="r">R</div><div class="key" data-key="t">T</div><div class="key" data-key="y">Y</div><div class="key" data-key="u">U</div><div class="key" data-key="i">I</div><div class="key" data-key="o">O</div><div class="key" data-key="p">P</div>
-        </div>
-        <div class="key-row">
-          <div class="key" data-key="a">A</div><div class="key" data-key="s">S</div><div class="key" data-key="d">D</div><div class="key" data-key="f">F</div><div class="key" data-key="g">G</div><div class="key" data-key="h">H</div><div class="key" data-key="j">J</div><div class="key" data-key="k">K</div><div class="key" data-key="l">L</div>
-        </div>
-        <div class="key-row">
-          <div class="key" data-key="z">Z</div><div class="key" data-key="x">X</div><div class="key" data-key="c">C</div><div class="key" data-key="v">V</div><div class="key" data-key="b">B</div><div class="key" data-key="n">N</div><div class="key" data-key="m">M</div>
-        </div>
-        <div class="key-row">
-          <div class="key key-space" data-key=" ">Space</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Detailed Results Dashboard -->
-    <section id="results-card" class="results-card hidden">
-      <h2>🎉 Test Completed!</h2>
-      <div class="results-grid">
-        <div class="result-box">
-          <span class="result-label">Final WPM</span>
-          <span id="final-wpm" class="result-val">0</span>
-        </div>
-        <div class="result-box">
-          <span class="result-label">Accuracy</span>
-          <span id="final-accuracy" class="result-val">0%</span>
-        </div>
-        <div class="result-box">
-          <span class="result-label">Total Characters</span>
-          <span id="final-total-chars" class="result-val">0</span>
-        </div>
-        <div class="result-box">
-          <span class="result-label">Correct Characters</span>
-          <span id="final-correct-chars" class="result-val">0</span>
-        </div>
-        <div class="result-box">
-          <span class="result-label">Wrong Characters</span>
-          <span id="final-wrong-chars" class="result-val">0</span>
-        </div>
-        <div class="result-box">
-          <span class="result-label">Time Taken</span>
-          <span id="final-time-taken" class="result-val">0s</span>
-        </div>
-      </div>
-      <div class="modal-buttons">
-        <button id="try-again-btn" class="btn btn-secondary margin-top">Try Again</button>
-        <button id="next-level-modal-btn" class="btn btn-primary margin-top">Next Passage ➔</button>
-      </div>
-    </section>
-
-    <!-- Score History Section -->
-    <section class="history-card">
-      <div class="history-header">
-        <h3>Previous Attempts</h3>
-        <button id="clear-history-btn" class="btn-text">Clear History</button>
-      </div>
-      <ul id="history-list" class="history-list"></ul>
-    </section>
-
   </div>
 
   <script src="script.js"></script>
